@@ -1,0 +1,9 @@
+.MuiStack {
+  border: 1px solid red;
+  border-radius: 25px;
+  padding: 1rem;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
