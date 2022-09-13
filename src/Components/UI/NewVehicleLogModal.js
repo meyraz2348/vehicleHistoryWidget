@@ -1,10 +1,7 @@
 import * as React from "react";
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
+import { Box, Fade, Backdrop, Modal, Button, Stack } from "@mui/material";
 import InputForm from "./InputForm";
+import { set } from "date-fns";
 
 const style = {
   position: "absolute",
@@ -12,7 +9,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  height: 400,
+  height: 440,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -21,15 +18,26 @@ const style = {
 
 const NewVehicleLogModal = () => {
   const [open, setOpen] = React.useState(false);
+  const [benchHandle, setBenchHandle] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleBenchOpen = () => {
+    setBenchHandle(true);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setBenchHandle(false);
+  };
   return (
     <div>
-      <div style={{ justifyContent: "center", alignItems: "center" }}>
+      <Stack spacing={3} direction="row">
         <Button onClick={handleOpen} variant="contained">
-          Add New Log
+          Add New Vechile Log
         </Button>
-      </div>
+        <Button onClick={handleBenchOpen} variant="contained">
+          Add New Bench Log
+        </Button>
+      </Stack>
       <Modal
         open={open}
         onClose={handleClose}
@@ -41,7 +49,7 @@ const NewVehicleLogModal = () => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <InputForm onInsertButton={handleClose} />
+            <InputForm onInsertButton={handleClose} isBenchOpen={benchHandle} />
           </Box>
         </Fade>
       </Modal>

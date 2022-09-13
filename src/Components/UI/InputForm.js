@@ -6,15 +6,12 @@ import {
   InputLabel,
   FormControl,
   Button,
+  Stack,
 } from "@mui/material";
-import classes from "./InputForm.Module.css";
-import dayjs from "dayjs";
 import React, { useRef, useState } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { format } from "date-fns";
-import { maxWidth, Stack } from "@mui/system";
 
 const InputForm = (props) => {
   const [contractStartDate, setContractStartDate] = useState();
@@ -29,9 +26,11 @@ const InputForm = (props) => {
   const vehicleStatusChangeHandler = (event) => {
     setVehicleStatus((status) => event.target.value);
   };
+  const isBenchOpen = props.isBenchOpen;
   const isEmpty = (value) => value.trim() === "";
   const regoRef = useRef("");
   const driverNameRef = useRef("");
+  const notesRef = useRef("");
   let formIsValid = false;
   let allVehicles = [];
   const formSubmitHandler = (event) => {
@@ -43,6 +42,7 @@ const InputForm = (props) => {
     const startDateIsValid = !isEmpty(contractStartDate);
     const endDateIsValid = !isEmpty(contractEndDate);
     const vehicleStatusIsValid = !isEmpty(vehicleStatus);
+
     formIsValid =
       regoIsValid &&
       driverNameIsValid &&
@@ -52,6 +52,17 @@ const InputForm = (props) => {
     if (!formIsValid) {
       return;
     }
+    {
+      !isBenchOpen &&
+        allVehicles.push({
+          rego: rego,
+          driverName: driverName,
+          contractStartDate: contractStartDate,
+          contractEndDate: contractEndDate,
+          vehiclesStatus: vehicleStatus,
+        });
+    }
+    console.log(allVehicles);
     regoRef.current.value = "";
     driverNameRef.current.value = "";
     setContractEndDate("");
@@ -96,6 +107,18 @@ const InputForm = (props) => {
       <MenuItem value={"ENDED"}>Ended</MenuItem>
     </Select>
   );
+  const BenchStatus = (
+    <Select
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      label="Status"
+      value={vehicleStatus}
+      onChange={vehicleStatusChangeHandler}
+    >
+      <MenuItem value={"Mechanic"}>Mechanic</MenuItem>
+      <MenuItem value={"GARAGE"}>Garage</MenuItem>
+    </Select>
+  );
   return (
     <Box
       component="form"
@@ -107,17 +130,35 @@ const InputForm = (props) => {
     >
       <Stack justifyContent="center" alignItems="center">
         <TextField id="outlined-error" inputRef={regoRef} label="rego" />
-        <TextField
-          id="outlined-error"
-          inputRef={driverNameRef}
-          label="driverName"
-        />
+        {!isBenchOpen && (
+          <TextField
+            id="outlined-error"
+            inputRef={driverNameRef}
+            label="driverName"
+          />
+        )}
+        {isBenchOpen && (
+          <TextField
+            id="outlined-error"
+            label="driverName"
+            inputRef={driverNameRef}
+            defaultValue={"Vikram Gupta"}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        )}
         {ContractStartDateComponent}
         {ContractEndDateComponent}
         <FormControl sx={{ m: 1, minWidth: 251 }}>
           <InputLabel id="demo-simple-select-label">Status</InputLabel>
-          {Status}
+          {!isBenchOpen && Status}
+          {isBenchOpen && BenchStatus}
         </FormControl>
+        {/* {isBenchOpen && (
+          <TextField id="outlined-error" inputRef={notesRef} label="notes" />
+        )} */}
+
         <Button
           onClick={formSubmitHandler}
           variant="contained"

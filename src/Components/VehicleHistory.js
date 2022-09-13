@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import classes from "./VehicleHistory.module.css";
-import { Typography } from "@mui/material";
-import { Container } from "@mui/system";
-import Stack from "@mui/material/Stack";
+import { Typography, Container, Stack } from "@mui/material";
 import DataGridMui from "./DataGridMui";
 import FormControlMui from "./FormControlMui";
+import classes from "./VehicleHistory.module.css";
 const VehicleHistory = (props) => {
   const [enteredRego, setEnteredRego] = useState(null);
   const [enteredFromDate, setEnteredFromDate] = useState(null);
@@ -34,13 +32,3 @@ const VehicleHistory = (props) => {
 };
 
 export default VehicleHistory;
-{
-  /* <TextField id="outlined-basic" label="rego" variant="outlined" />
-          <Button
-            variant="contained"
-            // value={searchRef}
-            onClick={regoSearchHandler}
-          >
-            search
-          </Button> */
-}

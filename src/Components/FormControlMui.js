@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import { FormControl, Button, TextField, FormGroup } from "@mui/material";
+import {
+  FormControl,
+  Button,
+  TextField,
+  FormGroup,
+  Paper,
+} from "@mui/material";
 import { useRef } from "react";
 import { format } from "date-fns";
-import FromToDatePickers from "./FromToDatePickers";
+// import FromToDatePickers from "./FromToDatePickers";
 const FormControlMui = (props) => {
   const searchRef = useRef(null);
   const [userSearch, setUserSearch] = useState("");
@@ -23,8 +24,6 @@ const FormControlMui = (props) => {
       newFromDate: enteredFromDate,
       newToDate: enteredToDate,
     });
-
-    // searchRef.current.value = "";
   }, [userSearch, enteredFromDate, enteredToDate]);
   const formControlHandler = (event) => {
     event.preventDefault();
@@ -34,7 +33,6 @@ const FormControlMui = (props) => {
   const dateSearchHandler = (newDate) => {
     setEnteredFromDate(newDate.fromDate);
     setEnteredToDate(newDate.toDate);
-    // searchRef.current.value = "";
   };
   return (
     <Paper
@@ -51,8 +49,6 @@ const FormControlMui = (props) => {
         <FormGroup
           row={true}
           style={{
-            // display: "flex-end",
-
             alignItems: "center",
             justifyContent: "space-evenly",
           }}
@@ -66,6 +62,7 @@ const FormControlMui = (props) => {
               margin: "2rem",
               minWidth: "60",
             }}
+            inputProps={{ style: { textTransform: "uppercase" } }}
             inputRef={searchRef}
           />
           <Button

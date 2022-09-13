@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { Container } from "@mui/system";
-
 const DataGridMui = (props) => {
   let rows = []; /* this array is o/p userSearchedRego vehicles */
   const [fullVehicleArray, setFullVehicleArray] = useState([]);
@@ -14,19 +13,21 @@ const DataGridMui = (props) => {
       setFullVehicleArray(responseData);
     };
     vehicleData();
-  }, [fullVehicleArray]);
+  }, []);
   if (props.searchValue) {
     for (const key in fullVehicleArray) {
       console.log(fullVehicleArray[key].rego);
+      let count = 0;
       if (
         props.searchValue.toLowerCase() ===
           fullVehicleArray[key].rego.toLowerCase() ||
         props.searchValue.toLowerCase() ===
           fullVehicleArray[key].driverName.toLowerCase()
       ) {
+        count++;
         rows.push({
           /**ACTUAL PUSH LOGIN FOR REALTIME DATA**/
-          id: fullVehicleArray[key].id,
+          id: key,
           driverName: fullVehicleArray[key].driverName,
           rego: fullVehicleArray[key].rego,
           contractStartDate: fullVehicleArray[key].contractStartDate,
