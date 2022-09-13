@@ -4,16 +4,68 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Container } from "@mui/system";
 const DataGridMui = (props) => {
   let rows = []; /* this array is o/p userSearchedRego vehicles */
-  const [fullVehicleArray, setFullVehicleArray] = useState([]);
-  useEffect(() => {
-    const vehicleData = async () => {
-      const response = await fetch("http://localhost:3000/vehicles");
-      const responseData = await response.json();
-      console.log(responseData);
-      setFullVehicleArray(responseData);
-    };
-    vehicleData();
-  }, []);
+  let fullVehicleArray = [
+    {
+      id: "1",
+      driverName: "JOHN DOE",
+      rego: "1NH985",
+      contractStartDate: "22-05-2021",
+      contractEndDate: "22-10-2023",
+      status: "ACTIVE",
+    },
+    {
+      id: "2",
+      driverName: "BOB STONE",
+      rego: "1OK789",
+      contractStartDate: "09-01-2021",
+      contractEndDate: "02-12-2022",
+      status: "ACTIVE",
+    },
+    {
+      id: "3",
+      driverName: "CHRIS ANDRAIANA",
+      rego: "1WETHY",
+      contractStartDate: "12-12-2021",
+      contractEndDate: "22-10-2023",
+      status: "ACTIVE",
+    },
+    {
+      id: "4",
+      driverName: "MACK TAYLOR",
+      rego: "1NKGYM",
+      contractStartDate: "25-10-2021",
+      contractEndDate: "22-08-2022",
+      status: "ENDED",
+    },
+    {
+      id: "5",
+      driverName: "CAMERON WHITE",
+      rego: "1NH985",
+      contractStartDate: "09-01-2021",
+      contractEndDate: "02-08-2021",
+      status: "ENDED",
+    },
+    {
+      id: "6",
+      driverName: "STEVEN SMITH",
+      rego: "1NH985",
+      contractStartDate: "10-08-2021",
+      contractEndDate: "02-04-2022",
+      status: "ENDED",
+    },
+  ];
+
+  // const [fullVehicleArray, setFullVehicleArray] = useState([]);
+  // useEffect(() => {
+  //   const vehicleData = async () => {
+  //     const response = await fetch("http://localhost:3000/vehicles");
+  //     const responseData = await response.json();
+  //     console.log(responseData);
+  //     setFullVehicleArray(responseData);
+  //   };
+  //   vehicleData();
+  // }, []);
+
   if (props.searchValue) {
     for (const key in fullVehicleArray) {
       console.log(fullVehicleArray[key].rego);
